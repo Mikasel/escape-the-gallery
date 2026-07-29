@@ -9,18 +9,17 @@ public class Player : MonoBehaviour
     public bool isAppleCollected;
     public GameDirector gameDirector;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public void RestartPlayer()
     {
+        gameObject.SetActive(true);
         _rb = GetComponent<Rigidbody>();
+        _rb.position = Vector3.zero;
+        isAppleCollected = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            gameObject.SetActive(false);
-            gameDirector.LevelFailed();
-        }
 
         if (other.CompareTag("Collectible"))
         {
@@ -34,6 +33,14 @@ public class Player : MonoBehaviour
             gameDirector.LevelCompleted();
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Enemy"))
+        {
+            gameObject.SetActive(false);
+            gameDirector.LevelFailed();
+        }    }
 
     // Update is called once per frame
     void Update()
