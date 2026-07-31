@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private Rigidbody _rb;
     public bool isAppleCollected;
     public GameDirector gameDirector;
+    private bool _isCharacterWalking;
+    public Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public void RestartPlayer()
@@ -45,46 +47,73 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var direciton = Vector3.zero;
+        MovePlayer();
+        
+    }
+
+    private void MovePlayer()
+    {
+        var direction = Vector3.zero;
         /*wasd kontrolleri*/ 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 6;
+            SetWalkAnimationSpeed(2);
         }
         else
         {
             speed = 3;
+            SetWalkAnimationSpeed(1);
         }
             
         if (Input.GetKey(KeyCode.W))
         {
-            direciton += Vector3.forward;
+            direction += Vector3.forward;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            direciton += Vector3.back;
+            direction += Vector3.back;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            direciton += Vector3.left;
+            direction += Vector3.left;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            direciton += Vector3.right;
-        } 
-        _rb.linearVelocity = direciton.normalized * speed;
-        
-        
-        
-        /*flappy bird mekaniği
-       /*transform.position += Vector3.forward * speed * Time.deltaTime;
-       if (Input.GetMouseButton(0))
-       {
-           transform.position += Vector3.up * speed * Time.deltaTime;
-       }
-       else
-       {
-           transform.position += Vector3.down * speed * Time.deltaTime;
-       }*/
+            direction += Vector3.right;
+        }
+
+        if (direction.magnitude < .1f)
+        {
+            TriggerIdleAnimation();
+        }
+        else
+        {
+            TriggerWalkAnimation();
+        }
+        transform.LookAt(transform.position + direction);
+        _rb.linearVelocity = direction.normalized * speed;
+    }
+
+    void TriggerWalkAnimation()
+    {
+        if (!_isCharacterWalking)
+        {
+            animator.SetTrigger("Walk");
+            _isCharacterWalking = true;
+        }
+    }
+    void TriggerIdleAnimation()
+    {
+        if (_isCharacterWalking)
+        {
+            animator.SetTrigger("Idle");
+            _isCharacterWalking = false;
+        }
+    }
+
+    void SetWalkAnimationSpeed(float s)
+    {
+        animator.SetFloat("WalkSpeedMultiplier", s);
     }
 }

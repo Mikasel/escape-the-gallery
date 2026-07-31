@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 1
   navMeshAgent: {fileID: 9142548722783218889}
+  zPrefab: {fileID: 7217090734191321678, guid: 06d5f30f7abcf4a5aa2e7929f50ae407, type: 3}
 --- !u!54 &8604528914296170109
 Rigidbody:
   m_ObjectHideFlags: 0

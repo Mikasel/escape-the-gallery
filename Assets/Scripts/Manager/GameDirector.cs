@@ -35,7 +35,6 @@ namespace Manager
         public void LevelFailed()
         {
             enemyManager.StopEnemies();
-            print("failed");
         }
     }
 }

@@ -38,7 +38,7 @@ public class EnemyManager : MonoBehaviour
         enemies.Clear();
         
     }
-
+    
     public void StopEnemies()
     {
         foreach (var e in enemies)
