@@ -11,9 +11,9 @@ public class Collectible : MonoBehaviour
 
     private void StartAnimation()
     {
-        transform.DOMoveY(transform.position.y + 0.4f, 0.5f)
+        transform.DOMoveY(transform.position.y + 0.6f, 0.5f)
             .SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-        transform.DORotate(Vector2.up * 90,  0.5f)
+        transform.DORotate(Vector2.up * 90,  .75f)
             .SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
     }
 
